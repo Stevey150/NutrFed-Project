@@ -9,10 +9,8 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: sans-serif;
       background-color: #b8e9df;
-      color: #000;
     }
     #map {
       position: absolute;
@@ -28,9 +26,7 @@
       z-index: 1;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       background-color: #fff;
-      color: #000;
       padding: 10px 20px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -38,16 +34,14 @@
     .logo {
       font-weight: bold;
       font-size: 18px;
-      color: #000;
     }
     .back-button {
       padding: 6px 12px;
-      background-color: #000;
-      color: #fff;
+      background-color: #b8e9df;
+      color: black;
       border: none;
       border-radius: 4px;
       text-decoration: none;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -60,12 +54,12 @@
   <div id="map"></div>
 
   <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibG1hcnRpMjciLCJhIjoiY204NG5lZGhpMjVxODJqcWJjbDJseTNtayJ9.wt5kau3rvyaPdJ2alx0_2g'; // Replace with your actual token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibG1hcnRpMjciLCJhIjoiY204NG5lZGhpMjVxODJqcWJjbDJseTNtayJ9.wt5kau3rvyaPdJ2alx0_2g';
 
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-77.0369, 38.9072], // Default to Washington DC
+      center: [-77.0369, 38.9072], // fallback to DC
       zoom: 13
     });
 
@@ -79,26 +73,32 @@
 
     map.on('load', () => {
       geolocate.trigger();
+    });
 
-      geolocate.on('geolocate', (e) => {
-        const userLng = e.coords.longitude;
-        const userLat = e.coords.latitude;
+    geolocate.on('geolocate', (e) => {
+      const userLng = e.coords.longitude;
+      const userLat = e.coords.latitude;
 
-        // Call Mapbox Geocoding API to get nearby grocery stores
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/grocery.json?proximity=${userLng},${userLat}&types=poi&access_token=${mapboxgl.accessToken}`)
-          .then(res => res.json())
-          .then(data => {
-            data.features.forEach(store => {
-              const coords = store.geometry.coordinates;
-              const name = store.text;
+      // Recenter map to user location
+      map.flyTo({ center: [userLng, userLat], zoom: 14 });
 
-              new mapboxgl.Marker({ color: '#000' })
-                .setLngLat(coords)
-                .setPopup(new mapboxgl.Popup().setHTML(`<strong>${name}</strong>`))
-                .addTo(map);
-            });
+      // Fetch nearby grocery stores
+      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/grocery.json?proximity=${userLng},${userLat}&types=poi&limit=10&access_token=${mapboxgl.accessToken}`)
+        .then(res => res.json())
+        .then(data => {
+          data.features.forEach(store => {
+            const coords = store.geometry.coordinates;
+            const name = store.text;
+
+            new mapboxgl.Marker({ color: '#000' })
+              .setLngLat(coords)
+              .setPopup(new mapboxgl.Popup().setHTML(`<strong>${name}</strong>`))
+              .addTo(map);
           });
-      });
+        })
+        .catch(err => {
+          alert("Error loading grocery stores: " + err.message);
+        });
     });
   </script>
 </body>

@@ -1,18 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
-
     <meta charset="UTF-8">
     <title>NutriFed - Get Started</title>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .auth-buttons {
+            margin-top: 20px;
+        }
+
+        .auth-buttons a {
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .auth-buttons .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-buttons .btn:hover {
+            background-color: #4a5d59;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .logo {
+            width: 150px;
+            margin-top: 30px;
+        }
+
+        .title {
+            font-family: 'Modak', cursive;
+            font-size: 48px;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <img src="{{ url_for('static', filename='logo.png') }}" alt="NutriFed Logo" class="logo">
     <div class="title">NutrFed</div>
     <div class="subtitle">Healthy Meals, Made Easy!</div>
-    <a href="{{ url_for('categories') }}">
-        <button class="button">Get Started</button>
-    </a>
+    <h2>Welcome to NutrFed!</h2>
+    
+    <div class="auth-buttons">
+        <a href="{{ url_for('signup') }}"><button class="btn">Sign Up</button></a>
+        <a href="{{ url_for('signin') }}"><button class="btn">Sign In</button></a>
+    </div>
 </body>
 </html>

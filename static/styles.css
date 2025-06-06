@@ -1,0 +1,222 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #b8e9df;
+    font-family: 'Helvetica Neue', sans-serif;
+    text-align: center;
+}
+
+/* Shared Button Style */
+.button {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    color: black;
+}
+
+.button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Landing Page Specific */
+.logo {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-family: 'Modak';
+    font-size: 48px;
+    color: white;
+    -webkit-text-stroke: 4px black;
+    text-shadow: none;
+    margin: 10px 0;
+    
+}
+
+.subtitle {
+    font-style: italic;
+    color: #444;
+    margin-bottom: 40px;
+}
+
+/* Navbar on Categories Page */
+.navbar {
+    background-color: #b8e9df;
+    padding: 10px 30px;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-small {
+    max-width: 60px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-name {
+    font-family: 'Modak', cursive;
+    font-size: 36px;
+    color: white;
+    -webkit-text-stroke: 3px black;
+    text-shadow: none;
+    margin-top: 20px;
+}
+
+/* Categories Page Title */
+.section-title {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    color: black;
+}
+
+/* Grid Layout for Categories */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.grid-item {
+    background-color: white;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s ease;
+}
+
+.grid-item:hover {
+    transform: scale(1.03);
+}
+
+.grid-item img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.grid-item p {
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* About page */
+.about-box {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 700px;
+    text-align: left;
+    color: black;
+}
+
+.about-box h3 {
+    margin-top: 25px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.about-box ul {
+    padding-left: 20px;
+}
+
+.about-box li {
+    margin-bottom: 10px;
+}
+
+/* Ingredients */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#ingredient-input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Results */
+body {
+  background-color: #b8e9df;
+  font-family: 'Helvetica Neue', sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-family: 'Modak', cursive;
+  font-size: 36px;
+  color: white;
+  -webkit-text-stroke: 2px black;
+}
+
+.ingredient-form {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ingredient-form input {
+  padding: 10px;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+}
+
+.button {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #f0f0f0;
+}
+
+.recipe-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  text-align: left;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}

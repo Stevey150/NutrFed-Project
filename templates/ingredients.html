@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search by Ingredient - NutrFed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="categories-bg">
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('about') }}" class="button about-link">About Us</a>
+        </div>
+    </header>
+
+    <h2 class="section-title">Search Meals by Ingredient</h2>
+
+    <form id="ingredientForm" class="ingredient-form">
+        <input type="text" name="ingredients" id="ingredients" placeholder="e.g., chicken, garlic, tomato" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <ul id="resultsList" class="results-list"></ul>
+
+    <script>
+        document.getElementById('ingredientForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const input = document.getElementById('ingredients').value;
+
+            const response = await fetch('/api/search_meals', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ingredients: input })
+            });
+
+            const data = await response.json();
+            const resultsList = document.getElementById('resultsList');
+            resultsList.innerHTML = '';
+
+            if (data.results && data.results.length > 0) {
+                data.results.forEach(title => {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `/meal/${encodeURIComponent(title)}`;
+                    link.textContent = title;
+                    li.appendChild(link);
+                    resultsList.appendChild(li);
+                });
+            } else {
+                resultsList.innerHTML = '<li>No matching meals found.</li>';
+            }
+        });
+    </script>
+</body>
+</html>

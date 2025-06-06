@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quick Meals - NutrFed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="categories-bg">
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('about') }}" class="button about-link">About Us</a>
+        </div>
+    </header>
+
+    <h2 class="section-title">Quick Meals</h2>
+
+    <form method="POST" action="{{ url_for('quick_meals') }}" class="search-form">
+        <label for="max_time">Enter Max Total Time (minutes):</label>
+        <input type="number" id="max_time" name="max_time" required>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+
+    {% if meals %}
+        <ul class="meal-list">
+            {% for meal in meals %}
+                <li class="meal-item">
+                    <a href="{{ url_for('quick_meal_detail', meal_name=meal['recipe_name']) }}">
+                        {{ meal['recipe_name'] }} - {{ meal['total_time'] }} minutes
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif request.method == 'POST' %}
+        <p class="no-results">No quick meals found within that time.</p>
+    {% endif %}
+</body>
+</html>

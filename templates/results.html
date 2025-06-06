@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results - NutrFed</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <h2 class="section-title">Search Results</h2>
+
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
+
+  {% for recipe in recipes %}
+    <div class="recipe-card">
+      <h3>{{ recipe.recipe_name }}</h3>
+      <p><strong>Prep Time:</strong> {{ recipe.prep_time }} mins | <strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
+      <p><strong>Servings:</strong> {{ recipe.servings }} | <strong>Rating:</strong> {{ recipe.rating }}</p>
+      <p><strong>Ingredients:</strong> {{ recipe.ingredients | join(', ') }}</p>
+      <p><strong>Directions:</strong></p>
+      <ol>
+        {% for step in recipe.directions %}
+          <li>{{ step }}</li>
+        {% endfor %}
+      </ol>
+      {% if recipe.url %}
+        <p><a href="{{ recipe.url }}" target="_blank">View Full Recipe</a></p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</body>
+</html>

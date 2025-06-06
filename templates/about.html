@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - NutrFed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('categories') }}" class="button">Back</a>
+        </div>
+    </header>
+
+    <h2 class="section-title">About Us</h2>
+
+    <div class="about-box">
+        <p>
+            At NutrFed, we’re on a mission to simplify healthy eating for college students. We know how challenging it can be to juggle a busy schedule, stick to a budget, and still eat nutritious meals. That’s why we created NutrFed—an app that transforms the ingredients you already have into quick, easy, and healthy recipes.
+        </p>
+        <p>
+            Whether you’re a seasoned cook or just starting out in the kitchen, NutrFed is here to help you nourish your body and mind without the stress.
+        </p>
+
+        <h3>Why Choose NutrFed?</h3>
+        <ul>
+            <li><strong>Save Time:</strong> Stop wasting time searching for recipes or meal ideas. NutrFed does it for you.</li>
+            <li><strong>Save Money:</strong> Use what you already have in your pantry and reduce food waste.</li>
+            <li><strong>Stay Healthy:</strong> Access balanced meal suggestions and track your nutrition goals.</li>
+            <li><strong>Boost Confidence:</strong> Follow easy, step-by-step recipes that help you level up your cooking skills.</li>
+        </ul>
+
+        <h3>Our Vision</h3>
+        <p>
+            We believe that healthy eating is the key to unlocking your full potential—academically, physically, and mentally. With NutrFed, we’re building a future where students are empowered to make choices that fuel their success, both in the classroom and beyond.
+        </p>
+    </div>
+</body>
+</html>

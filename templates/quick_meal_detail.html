@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ meal.recipe_name }} - NutrFed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="categories-bg">
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('categories') }}" class="button about-link">Back to Categories</a>
+        </div>
+    </header>
+
+    <div class="meal-detail">
+        <h2>{{ meal.recipe_name }}</h2>
+        <p><strong>Total Time:</strong> {{ meal.total_time }} minutes</p>
+        <p><strong>Prep Time:</strong> {{ meal.prep_time }}</p>
+        <p><strong>Cook Time:</strong> {{ meal.cook_time }}</p>
+        <p><strong>Servings:</strong> {{ meal.servings }}</p>
+        <p><strong>Yields:</strong> {{ meal.yields }}</p>
+        <p><strong>Rating:</strong> {{ meal.rating }}</p>
+        <p><strong>Ingredients:</strong><br>{{ meal.ingredients }}</p>
+        <p><strong>Directions:</strong><br>{{ meal.directions }}</p>
+        {% if meal.img_src %}
+            <img src="{{ meal.img_src }}" alt="{{ meal.recipe_name }}" class="meal-img">
+        {% endif %}
+    </div>
+</body>
+</html>

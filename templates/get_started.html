@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>NutriFed - Get Started</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="NutriFed Logo" class="logo">
+    <div class="title">NutrFed</div>
+    <div class="subtitle">Healthy Meals, Made Easy!</div>
+    <a href="{{ url_for('categories') }}">
+        <button class="button">Get Started</button>
+    </a>
+</body>
+</html>

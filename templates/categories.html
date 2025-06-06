@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories - NutrFed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="categories-bg">
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('about') }}" class="button about-link">About Us</a>
+        </div>
+    </header>
+
+    <h2 class="section-title">Categories</h2>
+
+    <div class="grid-container">
+        <a href="{{ url_for('search_by_ingredient') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='ingredients.png') }}" alt="Ingredients">
+            <p>Search Based on Ingredients</p>
+        </a>
+        <a href="{{ url_for('search_meals') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='search.png') }}" alt="Search Meals">
+            <p>Search Meals</p>
+        </a>
+        <a href="{{ url_for('suggested_meals') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='suggested.png') }}" alt="Suggested Meals">
+            <p>Suggested Meals</p>
+        </a>
+        <a href="{{ url_for('quick_meals') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='quick.png') }}" alt="Quick Meals">
+            <p>Quick Meals</p>
+        </a>
+        <a href="{{ url_for('find_grocery_stores') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='store.png') }}" alt="Find Store">
+            <p>Find Store</p>
+        </a>
+        <a href="{{ url_for('vegan_meals') }}" class="grid-item">
+            <img src="{{ url_for('static', filename='vegan.png') }}" alt="Vegan Meals">
+            <p>Vegan Meals</p>
+        </a>
+    </div>
+
+    <!-- ✅ Chatbot script goes here -->
+    <script>
+        (function () {
+            if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+                window.chatbase = (...arguments) => {
+                    if (!window.chatbase.q) { window.chatbase.q = [] }
+                    window.chatbase.q.push(arguments)
+                };
+                window.chatbase = new Proxy(window.chatbase, {
+                    get(target, prop) {
+                        if (prop === "q") { return target.q }
+                        return (...args) => target(prop, ...args)
+                    }
+                });
+            }
+            const onLoad = function () {
+                const script = document.createElement("script");
+                script.src = "https://www.chatbase.co/embed.min.js";
+                script.id = "_JEx2OM0QLAbhaswgBU24";
+                script.domain = "www.chatbase.co";
+                document.body.appendChild(script)
+            };
+            if (document.readyState === "complete") { onLoad() }
+            else { window.addEventListener("load", onLoad) }
+        })();
+    </script>
+
+</body>
+</html>

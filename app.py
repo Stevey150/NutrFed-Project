@@ -3,6 +3,7 @@ import requests
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.security import check_password_hash
+import random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -171,7 +172,19 @@ def search_meals():
 
 @app.route('/suggested_meals')
 def suggested_meals():
-    return "<h2>Suggested meals - Coming soon!</h2>"
+    query_url = f"{SUPABASE_URL_MEALS}/rest/v1/{MEALS_TABLE}?select=Title,Image_Name"
+    headers = {
+        'apikey': SUPABASE_API_KEY_MEALS,
+        'Authorization': f'Bearer {SUPABASE_API_KEY_MEALS}'
+    }
+
+    response = requests.get(query_url, headers=headers)
+    if response.status_code == 200:
+        meals = response.json()
+        suggested = random.sample(meals, min(5, len(meals)))  # Pick 5 or fewer if not enough meals
+        return render_template('suggested_meals.html', meals=suggested)
+    else:
+        return "<h2>Error loading suggested meals.</h2>", 500
 
 @app.route('/quick_meals', methods=['GET', 'POST'])
 def quick_meals():
@@ -202,6 +215,7 @@ def quick_meal_detail(meal_name):
         return render_template('quick_meal_detail.html', meal=meal)
     else:
         return "Meal not found", 404
+
 
 @app.route('/vegan_meals')
 def vegan_meals():

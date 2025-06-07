@@ -1,56 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Find Nearby Grocery Stores</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Find Nearby Grocery Stores - NutrFed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet" />
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #b8e9df;
-    }
     #map {
       position: absolute;
-      top: 0;
+      top: 100px;
       bottom: 0;
       width: 100%;
     }
-    .top-bar {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      background-color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .logo {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .back-button {
-      padding: 6px 12px;
-      background-color: #b8e9df;
-      color: black;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-    }
   </style>
 </head>
-<body>
-  <div class="top-bar">
-    <a href="{{ url_for('categories') }}" class="back-button">← Back</a>
-    <div class="logo">NutrFed</div>
-  </div>
+<body class="categories-bg">
+  <header class="navbar">
+    <div class="navbar-content">
+      <div class="logo-group">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+        <span class="brand-name">NutrFed</span>
+      </div>
+      <a href="{{ url_for('about') }}" class="button about-link">About Us</a>
+    </div>
+  </header>
 
+  <h2 class="section-title">Nearby Grocery Stores</h2>
   <div id="map"></div>
 
   <script>
@@ -59,7 +37,7 @@
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-77.0369, 38.9072], // fallback to DC
+      center: [-77.0369, 38.9072],
       zoom: 13
     });
 
@@ -78,22 +56,34 @@
     geolocate.on('geolocate', (e) => {
       const userLng = e.coords.longitude;
       const userLat = e.coords.latitude;
+      const userCoords = [userLng, userLat];
+      const radiusKm = 1;
 
-      // Recenter map to user location
-      map.flyTo({ center: [userLng, userLat], zoom: 14 });
+      map.flyTo({ center: userCoords, zoom: 14 });
 
-      // Fetch nearby grocery stores
-      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/grocery.json?proximity=${userLng},${userLat}&types=poi&limit=10&access_token=${mapboxgl.accessToken}`)
+      // Add marker for user's location
+      new mapboxgl.Marker({ color: 'blue' })
+        .setLngLat(userCoords)
+        .setPopup(new mapboxgl.Popup().setHTML("<strong>You are here</strong>"))
+        .addTo(map);
+
+      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/grocery.json?proximity=${userLng},${userLat}&types=poi&limit=20&access_token=${mapboxgl.accessToken}`)
         .then(res => res.json())
         .then(data => {
           data.features.forEach(store => {
             const coords = store.geometry.coordinates;
             const name = store.text;
 
-            new mapboxgl.Marker({ color: '#000' })
-              .setLngLat(coords)
-              .setPopup(new mapboxgl.Popup().setHTML(`<strong>${name}</strong>`))
-              .addTo(map);
+            const from = turf.point(userCoords);
+            const to = turf.point(coords);
+            const distance = turf.distance(from, to, { units: 'kilometers' });
+
+            if (distance <= radiusKm) {
+              new mapboxgl.Marker({ color: '#000' })
+                .setLngLat(coords)
+                .setPopup(new mapboxgl.Popup().setHTML(`<strong>${name}</strong><br>${distance.toFixed(2)} km away`))
+                .addTo(map);
+            }
           });
         })
         .catch(err => {

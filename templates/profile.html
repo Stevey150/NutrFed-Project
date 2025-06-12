@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile - NutrFed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="categories-bg">
+    <header class="navbar">
+        <div class="navbar-content">
+            <div class="logo-group">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="NutrFed Logo" class="logo-small">
+                <span class="brand-name">NutrFed</span>
+            </div>
+            <a href="{{ url_for('categories') }}" class="button about-link">← Back</a>
+        </div>
+    </header>
+
+    <h2 class="section-title">Welcome, {{ user_name }}</h2>
+
+    {% if saved_meals %}
+        <h3>Your Saved Meals</h3>
+        <ul>
+            {% for meal in saved_meals %}
+                <li><a href="{{ url_for('view_meal', title=meal['Title']) }}">{{ meal['Title'] }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no saved meals yet.</p>
+    {% endif %}
+</body>
+</html>

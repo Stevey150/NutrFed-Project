@@ -102,6 +102,13 @@ def logout():
 def make_session_permanent():
     session.permanent = True
 
+@app.route('/profile')
+def profile():
+    user_name = session.get('user', 'Guest')
+    # Later: You can add logic here to pull user's saved meals from the database
+    return render_template('profile.html', user_name=user_name, saved_meals=[])
+
+
 @app.route('/categories')
 def categories():
     return render_template('categories.html')
